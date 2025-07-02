@@ -11,6 +11,7 @@ execute:
 library(tidyverse)
 library(tidymodels)
 library(broom)
+library(marginaleffects)
 poll_data <- tibble(biden = as.factor(c(rep("Yes", 655), 
                                         rep("No", 904)))) |> 
                 slice_sample(prop = 1)
