@@ -9,9 +9,14 @@ execute:
 ```{r}
 #| message: false
 library(tidyverse)
+library(tidymodels)
+library(broom)
 poll_data <- tibble(biden = as.factor(c(rep("Yes", 655), 
                                         rep("No", 904)))) |> 
                 slice_sample(prop = 1)
 ```
 
-Public opinion polls show voter views during campaigns. Using March 2024 YouGov data from 1,559 U.S. adults, we estimate the share of votes Joe Biden will get in the November election.
+Public opinion polls show voter views during campaigns. Using March 2024 YouGov data from 1,559 U.S. adults, we estimate the share of votes Joe Biden will get in the November election. However, since voter preferences may shift significantly between March and November 2024, the assumption of stability may not hold, which could weaken the accuracy of our predictions.
+
+$$P(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n)}}
+$$
