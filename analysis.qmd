@@ -20,3 +20,13 @@ Public opinion polls show voter views during campaigns. Using March 2024 YouGov 
 
 $$P(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n)}}
 $$
+
+$$
+\hat{Y} = \frac{1}{1 + e^{-(-0.322)}}
+$$
+
+```{r}
+#| cache: true.
+fit_biden <- logistic_reg() |> 
+  fit(biden ~ 1, data = poll_data)
+```
