@@ -2,7 +2,7 @@
 title: "Biden Polling"
 author: Paramanyu Gupta
 format: html
-execute: 
+execute:
   echo: false
 ---
 
@@ -16,7 +16,7 @@ poll_data <- tibble(biden = as.factor(c(rep("Yes", 655),
                 slice_sample(prop = 1)
 ```
 
-Public opinion polls show voter views during campaigns. Using March 2024 YouGov data from 1,559 U.S. adults, we estimate the share of votes Joe Biden will get in the November election. However, since voter preferences may shift significantly between March and November 2024, the assumption of stability may not hold, which could weaken the accuracy of our predictions.
+Public opinion polls show voter views during campaigns. Using March 2024 YouGov data from 1,559 U.S. adults, we estimate the share of votes Joe Biden will get in the November election. However, since voter preferences may shift significantly between March and November 2024, the assumption of stability may not hold, which could weaken the accuracy of our predictions. We model voter support for Joe Biden, a binary outcome representing “Yes” or “No” responses, as a logistic function with only an intercept term. This logistic regression estimates the overall probability of Biden support in the March 2024 YouGov survey data without additional predictors.
 
 $$P(Y = 1) = \frac{1}{1 + e^{-(\beta_0 + \beta_1 X_1 + \beta_2 X_2 + \cdots + \beta_n X_n)}}
 $$
@@ -26,7 +26,24 @@ $$
 $$
 
 ```{r}
-#| cache: true.
+#| cache: true
 fit_biden <- logistic_reg() |> 
   fit(biden ~ 1, data = poll_data)
+```
+
+
+```{r}
+library(dplyr)
+library(gt)
+
+tidy(fit_biden, conf.int = TRUE) %>%
+  select(term, estimate, conf.low, conf.high) %>%
+  gt() %>%
+  fmt_number(
+    columns = vars(estimate, conf.low, conf.high),
+    decimals = 3
+  ) %>%
+  tab_header(
+    title = "Logistic Regression Model Estimates for Biden Support"
+  )
 ```
